@@ -237,7 +237,7 @@ const AboutPage = () => {
     <>
       <AnimationStyles />
       
-      <div className="min-h-screen w-full flex flex-col bg-[#121212] text-white antialiased">
+      <div className="min-h-screen w-full flex flex-col bg-[#121212] text-white antialiased py-4 md:py-0">
         <div className="bg-[#f0ebe5] w-full max-w-7xl mx-auto rounded-2xl my-4 md:my-6 relative overflow-hidden">
           
           {/* Animated Grid Background */}
@@ -315,7 +315,7 @@ const AboutPage = () => {
                 transition={{ duration: 0.8, delay: 0.3 }}
                 className="relative mx-auto max-w-4xl"
               >
-                <div className="relative border-2 bg- border-orange-400 p-8 md:p-12 overflow-hidden group">
+                <div className="relative border-2 bg- border-orange-400 p-6 sm:p-8 md:p-12 overflow-hidden group">
                   {/* Shimmer effect */}
                   <div className="absolute inset-0 shimmer opacity-0 group-hover:opacity-100" />
                   
@@ -332,7 +332,7 @@ const AboutPage = () => {
                   />
 
                   <motion.h1 
-                    className="text-3xl md:text-5xl lg:text-6xl font-bold text-center text-black font-anton leading-tight relative z-10"
+                    className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-bold text-center text-black font-anton leading-tight relative z-10"
                     initial={{ y: 20, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
                     transition={{ duration: 0.6, delay: 0.5 }}
@@ -350,12 +350,12 @@ const AboutPage = () => {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.6 }}
-              className="my-16 md:my-24 max-w-3xl mx-auto relative z-10"
+              className="my-12 md:my-16 lg:my-24 max-w-3xl mx-auto relative z-10"
             >
-              <div className="bg-white/40 backdrop-blur-sm rounded-3xl p-8 md:p-12 border border-white/60 shadow-xl">
+              <div className="bg-white/40 backdrop-blur-sm rounded-3xl p-6 sm:p-8 md:p-12 border border-white/60 shadow-xl">
                 {/* Profile Image Placeholder */}
                 <motion.div
-                  className="w-32 h-32 mx-auto mb-8 rounded-full bg-linear-to-br from-[#e15f41] to-[#f5a623] flex items-center justify-center text-6xl font-bold text-white shadow-2xl"
+                  className="w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 mx-auto mb-6 md:mb-8 rounded-full bg-linear-to-br from-[#e15f41] to-[#f5a623] flex items-center justify-center text-4xl sm:text-5xl md:text-6xl font-bold text-white shadow-2xl"
                   initial={{ scale: 0, rotate: -180 }}
                   animate={{ scale: 1, rotate: 0 }}
                   transition={{ 
@@ -374,11 +374,11 @@ const AboutPage = () => {
                   animate={{ opacity: 1 }}
                   transition={{ duration: 0.8, delay: 1 }}
                 >
-                  <h2 className="text-2xl md:text-3xl font-bold text-center text-zinc-900 mb-4 font-anton">
+                  <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-center text-zinc-900 mb-3 md:mb-4 font-anton">
                     Hello, I&apos;m Harish
                   </h2>
                   
-                  <div className="space-y-4 text-base md:text-lg text-zinc-700 leading-relaxed">
+                  <div className="space-y-3 sm:space-y-4 text-sm sm:text-base md:text-lg text-zinc-700 leading-relaxed">
                     <motion.p
                       initial={{ opacity: 0, x: -20 }}
                       animate={{ opacity: 1, x: 0 }}
@@ -415,7 +415,7 @@ const AboutPage = () => {
               className="relative z-10 pb-12"
             >
               <motion.h2 
-                className="text-3xl md:text-4xl font-bold text-center text-zinc-900 font-anton mb-12"
+                className="text-2xl sm:text-3xl md:text-4xl font-bold text-center text-zinc-900 font-anton mb-8 md:mb-12 px-4"
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.6, delay: 1 }}
@@ -424,7 +424,7 @@ const AboutPage = () => {
               </motion.h2>
 
               <motion.div 
-                className="flex flex-wrap items-center justify-center gap-3 md:gap-4 max-w-5xl mx-auto"
+                className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 md:gap-4 max-w-5xl mx-auto px-4"
                 variants={containerVariants}
                 initial="hidden"
                 animate="visible"
@@ -441,7 +441,7 @@ const AboutPage = () => {
                     whileTap={{ scale: 0.95 }}
                     className="group relative"
                   >
-                    <div className="px-5 py-3 flex items-center gap-2 bg-white/70 backdrop-blur-sm border border-zinc-800/20 rounded-full text-sm md:text-base font-bold text-zinc-800 shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden">
+                    <div className="px-3 py-2 sm:px-4 sm:py-2.5 md:px-5 md:py-3 flex items-center gap-1.5 sm:gap-2 bg-white/70 backdrop-blur-sm border border-zinc-800/20 rounded-full text-xs sm:text-sm md:text-base font-bold text-zinc-800 shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden">
                       {/* Gradient background on hover */}
                       <motion.div
                         className={`absolute inset-0 bg-linear-to-r ${tech.color} opacity-0 group-hover:opacity-10 rounded-full`}
@@ -452,7 +452,7 @@ const AboutPage = () => {
                       
                       {/* Icon with animation */}
                       <motion.span 
-                        className="text-lg relative z-10"
+                        className="text-base sm:text-lg relative z-10"
                         animate={{ 
                           rotate: [0, 10, -10, 0],
                         }}
@@ -474,7 +474,7 @@ const AboutPage = () => {
 
               {/* Social Share Button */}
               <motion.div
-                className="mt-12 flex justify-center z-10"
+                className="mt-8 md:mt-12 flex justify-center z-10"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 1.8 }}

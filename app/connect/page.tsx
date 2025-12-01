@@ -223,8 +223,8 @@ const ConnectPage = () => {
     <>
       <AnimationStyles />
       
-      <div className="bg-[#121212] flex justify-center items-center h-screen w-screen p-4 md:p-6 overflow-hidden">
-        <div className="bg-[#f0ebe5] w-full max-w-7xl h-full rounded-2xl flex flex-col relative shadow-2xl overflow-hidden">
+      <div className="bg-[#121212] flex justify-center items-center min-h-screen w-full p-4 md:p-6 py-8">
+        <div className="bg-[#f0ebe5] w-full max-w-7xl min-h-screen md:h-screen rounded-2xl flex flex-col relative shadow-2xl overflow-hidden">
           
           {/* Animated Grid Background */}
           <GridBackground />
@@ -298,7 +298,7 @@ const ConnectPage = () => {
                 transition={{ duration: 0.8, delay: 0.3 }}
               >
                 <motion.h1 
-                  className="text-4xl md:text-6xl font-bold text-center text-zinc-900 font-anton mb-4"
+                  className="text-3xl sm:text-4xl md:text-6xl font-bold text-center text-zinc-900 font-anton mb-3 md:mb-4 px-4"
                   initial={{ scale: 0.9 }}
                   animate={{ scale: 1 }}
                   transition={{ duration: 0.6, delay: 0.4 }}
@@ -306,7 +306,7 @@ const ConnectPage = () => {
                   Let&apos;s Connect
                 </motion.h1>
                 <motion.p 
-                  className="text-center text-zinc-700 mb-8 md:mb-12 text-base md:text-lg"
+                  className="text-center text-zinc-700 mb-6 md:mb-12 text-sm sm:text-base md:text-lg px-4"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ duration: 0.6, delay: 0.6 }}
@@ -331,15 +331,15 @@ const ConnectPage = () => {
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ duration: 0.5, delay: 0.8 }}
                   >
-                    <label htmlFor="name" className="block text-sm font-bold text-zinc-900">
+                    <label htmlFor="name" className="block text-xs sm:text-sm font-bold text-zinc-900">
                       Name
                     </label>
                     <div className="relative group">
                       <motion.div
-                        className="absolute left-4 top-1/2 transform -translate-y-1/2"
+                        className="absolute left-3 sm:left-4 top-1/2 transform -translate-y-1/2"
                         whileHover={{ scale: 1.2, rotate: 10 }}
                       >
-                        <User className="w-5 h-5 text-zinc-500 group-focus-within:text-[#e15f41] transition-colors" />
+                        <User className="w-4 h-4 sm:w-5 sm:h-5 text-zinc-500 group-focus-within:text-[#e15f41] transition-colors" />
                       </motion.div>
                       <input
                         type="text"
@@ -348,7 +348,7 @@ const ConnectPage = () => {
                         value={formData.name}
                         onChange={handleChange}
                         required
-                        className="w-full pl-12 pr-4 py-3 rounded-xl border-2 border-zinc-300 focus:border-[#e15f41] focus:outline-none transition-all bg-white/70 backdrop-blur-sm text-zinc-900 hover:bg-white"
+                        className="w-full pl-10 sm:pl-12 pr-3 sm:pr-4 py-2.5 sm:py-3 text-sm sm:text-base rounded-xl border-2 border-zinc-300 focus:border-[#e15f41] focus:outline-none transition-all bg-white/70 backdrop-blur-sm text-zinc-900 hover:bg-white"
                         placeholder="Your name"
                       />
                     </div>
@@ -361,15 +361,15 @@ const ConnectPage = () => {
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ duration: 0.5, delay: 0.9 }}
                   >
-                    <label htmlFor="email" className="block text-sm font-bold text-zinc-900">
+                    <label htmlFor="email" className="block text-xs sm:text-sm font-bold text-zinc-900">
                       Email
                     </label>
                     <div className="relative group">
                       <motion.div
-                        className="absolute left-4 top-1/2 transform -translate-y-1/2"
+                        className="absolute left-3 sm:left-4 top-1/2 transform -translate-y-1/2"
                         whileHover={{ scale: 1.2, rotate: 10 }}
                       >
-                        <Mail className="w-5 h-5 text-zinc-500 group-focus-within:text-[#e15f41] transition-colors" />
+                        <Mail className="w-4 h-4 sm:w-5 sm:h-5 text-zinc-500 group-focus-within:text-[#e15f41] transition-colors" />
                       </motion.div>
                       <input
                         type="email"
@@ -378,7 +378,7 @@ const ConnectPage = () => {
                         value={formData.email}
                         onChange={handleChange}
                         required
-                        className="w-full pl-12 pr-4 py-3 rounded-xl border-2 border-zinc-300 focus:border-[#e15f41] focus:outline-none transition-all bg-white/70 backdrop-blur-sm text-zinc-900 hover:bg-white"
+                        className="w-full pl-10 sm:pl-12 pr-3 sm:pr-4 py-2.5 sm:py-3 text-sm sm:text-base rounded-xl border-2 border-zinc-300 focus:border-[#e15f41] focus:outline-none transition-all bg-white/70 backdrop-blur-sm text-zinc-900 hover:bg-white"
                         placeholder="your.email@example.com"
                       />
                     </div>
@@ -391,15 +391,15 @@ const ConnectPage = () => {
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ duration: 0.5, delay: 1.0 }}
                   >
-                    <label htmlFor="message" className="block text-sm font-bold text-zinc-900">
+                    <label htmlFor="message" className="block text-xs sm:text-sm font-bold text-zinc-900">
                       Message
                     </label>
                     <div className="relative group">
                       <motion.div
-                        className="absolute left-4 top-4"
+                        className="absolute left-3 sm:left-4 top-4"
                         whileHover={{ scale: 1.2, rotate: 10 }}
                       >
-                        <MessageSquare className="w-5 h-5 text-zinc-500 group-focus-within:text-[#e15f41] transition-colors" />
+                        <MessageSquare className="w-4 h-4 sm:w-5 sm:h-5 text-zinc-500 group-focus-within:text-[#e15f41] transition-colors" />
                       </motion.div>
                       <textarea
                         id="message"
@@ -407,8 +407,8 @@ const ConnectPage = () => {
                         value={formData.message}
                         onChange={handleChange}
                         required
-                        rows={6}
-                        className="w-full pl-12 pr-4 py-3 rounded-xl border-2 border-zinc-300 focus:border-[#e15f41] focus:outline-none transition-all bg-white/70 backdrop-blur-sm text-zinc-900 resize-none hover:bg-white"
+                        rows={5}
+                        className="w-full pl-10 sm:pl-12 pr-3 sm:pr-4 py-2.5 sm:py-3 text-sm sm:text-base rounded-xl border-2 border-zinc-300 focus:border-[#e15f41] focus:outline-none transition-all bg-white/70 backdrop-blur-sm text-zinc-900 resize-none hover:bg-white"
                         placeholder="Tell me about your project..."
                       />
                     </div>
@@ -418,7 +418,7 @@ const ConnectPage = () => {
                   <motion.button
                     type="submit"
                     disabled={status === 'sending'}
-                    className="w-full py-4 rounded-xl bg-linear-to-r from-[#e15f41] to-[#f5a623] hover:from-[#d14e32] hover:to-[#e09619] text-white font-bold text-lg transition-all duration-300 flex items-center justify-center gap-3 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg hover:shadow-2xl relative overflow-hidden group"
+                    className="w-full py-3 sm:py-4 rounded-xl bg-linear-to-r from-[#e15f41] to-[#f5a623] hover:from-[#d14e32] hover:to-[#e09619] text-white font-bold text-base sm:text-lg transition-all duration-300 flex items-center justify-center gap-2 sm:gap-3 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg hover:shadow-2xl relative overflow-hidden group"
                     whileHover={{ scale: status === 'sending' ? 1 : 1.02 }}
                     whileTap={{ scale: status === 'sending' ? 1 : 0.98 }}
                     initial={{ opacity: 0, y: 20 }}
@@ -429,7 +429,7 @@ const ConnectPage = () => {
                     {status === 'sending' ? (
                       <>
                         <motion.div 
-                          className="w-5 h-5 border-2 border-white border-t-transparent rounded-full"
+                          className="w-4 h-4 sm:w-5 sm:h-5 border-2 border-white border-t-transparent rounded-full"
                           animate={{ rotate: 360 }}
                           transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
                         />
@@ -442,7 +442,7 @@ const ConnectPage = () => {
                           animate={{ scale: 1 }}
                           transition={{ type: "spring", stiffness: 200 }}
                         >
-                          <Send className="w-5 h-5" />
+                          <Send className="w-4 h-4 sm:w-5 sm:h-5" />
                         </motion.div>
                         <span className="relative z-10">Message Sent!</span>
                       </>
@@ -450,7 +450,7 @@ const ConnectPage = () => {
                       <span className="relative z-10">Error! Try Again</span>
                     ) : (
                       <>
-                        <Send className="w-5 h-5 relative z-10" />
+                        <Send className="w-4 h-4 sm:w-5 sm:h-5 relative z-10" />
                         <span className="relative z-10">Send Message</span>
                       </>
                     )}
@@ -484,16 +484,16 @@ const ConnectPage = () => {
 
               {/* Direct Email Link */}
               <motion.div 
-                className="mt-8 text-center"
+                className="mt-6 md:mt-8 text-center px-4"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.6, delay: 1.2 }}
               >
-                <p className="text-sm text-zinc-600">
+                <p className="text-xs sm:text-sm text-zinc-600">
                   Or email me directly at{' '}
                   <motion.a 
                     href="mailto:imharishba@gmail.com" 
-                    className="text-zinc-900 font-bold hover:text-[#e15f41] transition-colors relative group inline-block"
+                    className="text-zinc-900 font-bold hover:text-[#e15f41] transition-colors relative group inline-block break-all"
                     whileHover={{ scale: 1.05 }}
                   >
                     <span className="relative z-10">imharishba@gmail.com</span>
@@ -509,7 +509,7 @@ const ConnectPage = () => {
 
               {/* Social Share Button */}
               <motion.div 
-                className="mt-6 flex justify-center"
+                className="mt-4 md:mt-6 flex justify-center"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 1.3 }}

@@ -271,8 +271,8 @@ const ProjectsPage = () => {
     <>
       <AnimationStyles />
       
-      <div className="bg-[#121212] flex justify-center items-center h-screen w-screen p-4 md:p-6 overflow-hidden">
-        <div className="bg-[#f0ebe5] w-full max-w-7xl h-full rounded-2xl flex flex-col relative shadow-2xl overflow-hidden">
+      <div className="bg-[#121212] flex justify-center items-center min-h-screen w-full p-4 md:p-6 py-8">
+        <div className="bg-[#f0ebe5] w-full max-w-7xl min-h-screen md:h-screen rounded-2xl flex flex-col relative shadow-2xl overflow-hidden">
           
           {/* Animated Grid Background */}
           <GridBackground />
@@ -343,7 +343,7 @@ const ProjectsPage = () => {
               transition={{ duration: 0.8, delay: 0.3 }}
             >
               <motion.h1 
-                className="text-4xl md:text-6xl font-bold text-center text-zinc-900 font-anton mb-4"
+                className="text-3xl sm:text-4xl md:text-6xl font-bold text-center text-zinc-900 font-anton mb-3 md:mb-4 px-4"
                 initial={{ scale: 0.9 }}
                 animate={{ scale: 1 }}
                 transition={{ duration: 0.6, delay: 0.4 }}
@@ -351,7 +351,7 @@ const ProjectsPage = () => {
                 My Projects
               </motion.h1>
               <motion.p 
-                className="text-center text-zinc-700 mb-8 md:mb-12 max-w-2xl mx-auto text-base md:text-lg"
+                className="text-center text-zinc-700 mb-6 md:mb-12 max-w-2xl mx-auto text-sm sm:text-base md:text-lg px-4"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.6, delay: 0.6 }}
@@ -360,9 +360,9 @@ const ProjectsPage = () => {
               </motion.p>
             </motion.div>
 
-            <div className="flex-1 flex items-center justify-center">
+            <div className="flex-1 flex items-center justify-center py-4 md:py-0">
               <motion.div 
-                className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 justify-items-center w-full max-w-6xl"
+                className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 lg:gap-8 justify-items-center w-full max-w-6xl px-2"
                 key={currentPage}
                 initial={{ opacity: 0, x: 50 }}
                 animate={{ opacity: 1, x: 0 }}
@@ -372,7 +372,7 @@ const ProjectsPage = () => {
                 {displayedProjects.map((project, index) => (
                   <motion.div 
                     key={startIndex + index} 
-                    className="relative w-full max-w-[340px] h-[400px] group perspective-[2000px]"
+                    className="relative w-full max-w-[340px] h-[380px] sm:h-[400px] group perspective-[2000px]"
                     initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ 
@@ -384,52 +384,63 @@ const ProjectsPage = () => {
                   >
                     <div className="relative w-full h-full transform-3d transition-all duration-700 hover:transform-[rotateY(180deg)]">
                       {/* Front of card */}
-                      <div className="absolute inset-0 w-full h-full backface-hidden transform-[rotateY(0deg)] overflow-hidden rounded-2xl bg-black border border-zinc-800 shadow-lg">
+                      <div className="absolute inset-0 w-full h-full backface-hidden transform-[rotateY(0deg)] overflow-hidden rounded-2xl bg-linear-to-br from-zinc-900 to-zinc-800 border border-zinc-700 shadow-lg">
                         <div className="relative h-full overflow-hidden">
-                          <div className="absolute inset-0 flex items-center justify-center">
-                            <div className="text-center p-6">
-                              <h3 className="text-2xl font-bold text-white mb-3">{project.title}</h3>
-                              <p className="text-base text-zinc-400">{project.subtitle}</p>
+                          {/* Placeholder Image */}
+                          <div className="absolute inset-0 bg-linear-to-br from-[#e15f41]/20 via-[#f5a623]/20 to-purple-500/20">
+                            <div className="absolute inset-0 flex items-center justify-center">
+                              <svg className="w-24 h-24 text-white/20" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M2 6a2 2 0 012-2h12a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2V6zm2 0v8h12V6H4zm2 2h8v4H6V8z"/>
+                              </svg>
+                            </div>
+                          </div>
+                          <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/40 to-transparent flex items-end">
+                            <div className="text-left p-4 w-full">
+                              <h3 className="text-xl sm:text-2xl font-bold text-white mb-2">{project.title}</h3>
+                              <p className="text-sm sm:text-base text-zinc-300">{project.subtitle}</p>
                             </div>
                           </div>
                         </div>
                       </div>
 
                       {/* Back of card */}
-                      <div className="absolute inset-0 w-full h-full backface-hidden transform-[rotateY(180deg)] p-6 rounded-2xl bg-black border border-zinc-800 shadow-lg flex flex-col">
-                        <div className="flex-1 space-y-4">
+                      <div className="absolute inset-0 w-full h-full backface-hidden transform-[rotateY(180deg)] p-4 sm:p-6 rounded-2xl bg-linear-to-br from-zinc-900 to-black border border-zinc-700 shadow-lg flex flex-col">
+                        <div className="flex-1 space-y-3 overflow-y-auto">
                           <div className="space-y-2">
-                            <h3 className="text-xl font-semibold text-white">{project.title}</h3>
-                            <p className="text-sm text-zinc-400 line-clamp-2">{project.description}</p>
+                            <h3 className="text-lg sm:text-xl font-semibold text-white">{project.title}</h3>
+                            <p className="text-xs sm:text-sm text-zinc-400 line-clamp-3">{project.description}</p>
                           </div>
 
                           <div className="space-y-2">
                             <p className="text-xs font-semibold text-zinc-500 uppercase tracking-wide">Tech Stack</p>
-                            {project.features.map((feature) => (
-                              <div key={feature} className="text-sm text-zinc-300 bg-zinc-900 rounded-lg px-3 py-2">
-                                <span className="font-medium">{feature}</span>
-                              </div>
-                            ))}
+                            <div className="flex flex-wrap gap-2">
+                              {project.features.map((feature) => (
+                                <div key={feature} className="text-xs sm:text-sm text-zinc-300 bg-zinc-800/80 rounded-lg px-2 sm:px-3 py-1.5">
+                                  <span className="font-medium">{feature}</span>
+                                </div>
+                              ))}
+                            </div>
                           </div>
                         </div>
 
-                        <div className="pt-4 mt-4 border-t border-zinc-800 flex gap-3">
+                        <div className="pt-3 mt-3 border-t border-zinc-700 flex gap-2 sm:gap-3">
                           <a
                             href={project.github}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="flex-1 flex items-center justify-center gap-2 p-3 rounded-lg bg-zinc-800 hover:bg-zinc-700 transition-all duration-300 text-white text-sm font-medium"
+                            className="flex-1 flex items-center justify-center gap-1 sm:gap-2 p-2 sm:p-3 rounded-lg bg-zinc-800 hover:bg-zinc-700 transition-all duration-300 text-white text-xs sm:text-sm font-medium"
                           >
-                            <Github className="w-4 h-4" />
-                            GitHub
+                            <Github className="w-3 h-3 sm:w-4 sm:h-4" />
+                            <span className="hidden sm:inline">GitHub</span>
+                            <span className="sm:hidden">Code</span>
                           </a>
                           <a
                             href={project.live}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="flex-1 flex items-center justify-center gap-2 p-3 rounded-lg bg-[#e15f41] hover:bg-[#d14e32] transition-all duration-300 text-white text-sm font-medium"
+                            className="flex-1 flex items-center justify-center gap-1 sm:gap-2 p-2 sm:p-3 rounded-lg bg-[#e15f41] hover:bg-[#d14e32] transition-all duration-300 text-white text-xs sm:text-sm font-medium"
                           >
-                            <ExternalLink className="w-4 h-4" />
+                            <ExternalLink className="w-3 h-3 sm:w-4 sm:h-4" />
                             Live
                           </a>
                         </div>
@@ -442,7 +453,7 @@ const ProjectsPage = () => {
 
             {/* Pagination Controls */}
             <motion.div 
-              className="flex items-center justify-center gap-6 mt-8"
+              className="flex items-center justify-center gap-4 sm:gap-6 mt-6 md:mt-8 mb-4"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.8 }}

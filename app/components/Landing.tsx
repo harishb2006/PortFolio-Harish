@@ -514,10 +514,10 @@ const LandingPage = () => {
       <AnimatePresence mode="wait">
         {!isNavigating && (
           <PageTransition>
-            <div className="bg-[#121212] flex justify-center items-center h-screen w-screen font-inter p-4 md:p-6 overflow-hidden">
+            <div className="bg-[#121212] flex justify-center items-center min-h-screen w-full font-inter p-4 md:p-6">
               <div
                 ref={containerRef}
-                className="bg-[#f0ebe5] w-full max-w-7xl h-full rounded-2xl flex flex-col justify-between items-center relative shadow-2xl overflow-hidden"
+                className="bg-[#f0ebe5] w-full max-w-7xl min-h-screen md:h-screen rounded-2xl flex flex-col justify-between items-center relative shadow-2xl overflow-hidden"
               >
                 {/* Animated Grid Background */}
                 <GridBackground />
@@ -592,7 +592,7 @@ const LandingPage = () => {
                   {/* Shape with Dots - Your Signature Sandal */}
                   <motion.div
                     ref={shapeRef}
-                    className="absolute w-[95vw] max-w-4xl h-72 bg-black morph-shape transition-transform duration-300 ease-out shadow-2xl overflow-hidden"
+                    className="absolute w-[85vw] sm:w-[75vw] md:w-[95vw] max-w-4xl h-48 sm:h-60 md:h-72 bg-black morph-shape transition-transform duration-300 ease-out shadow-2xl overflow-hidden"
                     style={shapeStyle}
                     initial={{ scale: 0.8, opacity: 0 }}
                     animate={{ scale: 1, opacity: 1 }}
@@ -627,16 +627,16 @@ const LandingPage = () => {
 
                   {/* Title with Staggered Reveal */}
                   <AnimatePresence>
-                    <h1 className="relative text-center font-anton tracking-wide z-10">
+                    <h1 className="relative text-center font-anton tracking-wide z-10 px-4">
                         <TextReveal delay={0.5}>
-                          <span className="block text-lg md:text-xl font-medium text-white/80 mb-2 tracking-widest uppercase">
+                          <span className="block text-sm sm:text-base md:text-xl font-medium text-white/80 mb-2 tracking-widest uppercase">
                             Hello, I&apos;m
                           </span>
                         </TextReveal>
 
                         <TextReveal delay={0.7} className="mb-4">
                           <motion.span 
-                            className="block text-6xl md:text-8xl lg:text-9xl font-bold text-white drop-shadow-2xl tracking-tighter"
+                            className="block text-4xl sm:text-5xl md:text-8xl lg:text-9xl font-bold text-white drop-shadow-2xl tracking-tighter"
                             whileHover={{ scale: 1.02 }}
                             transition={{ type: "spring", stiffness: 300 }}
                           >
@@ -650,9 +650,9 @@ const LandingPage = () => {
                           transition={{ duration: 0.6, delay: 1 }}
                           whileHover={{ scale: 1.05, rotate: 1 }}
                         >
-                          <span className="inline-block bg-linear-to-r from-[#e15f41] to-[#f5a623] rounded-2xl  px-4 md:py-4 shadow-2xl hover:shadow-3xl transition-all duration-300 relative overflow-hidden group">
+                          <span className="inline-block bg-linear-to-r from-[#e15f41] to-[#f5a623] rounded-xl md:rounded-2xl px-3 py-2 md:px-4 md:py-4 shadow-2xl hover:shadow-3xl transition-all duration-300 relative overflow-hidden group">
                             <span className="absolute inset-0 shimmer" />
-                            <span className="block text-2xl md:text-3xl lg:text-4xl font-bold text-black relative z-10">
+                            <span className="block text-lg sm:text-xl md:text-3xl lg:text-4xl font-bold text-black relative z-10">
                               SOFTWARE ENGINEER
                             </span>
                           </span>
@@ -662,7 +662,7 @@ const LandingPage = () => {
 
                   {/* Tagline */}
                   <motion.p
-                    className="mt-8 text-zinc-600 text-center max-w-md text-base md:text-lg z-10 font-medium"
+                    className="mt-6 md:mt-8 text-zinc-600 text-center max-w-md text-sm sm:text-base md:text-lg z-10 font-medium px-4"
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6, delay: 1.2 }}
@@ -673,7 +673,7 @@ const LandingPage = () => {
 
                 {/* Navigation with Enhanced Animation */}
                 <motion.div 
-                  className="w-full flex justify-center gap-6 md:gap-10 mb-8 z-20"
+                  className="w-full flex flex-wrap justify-center gap-3 sm:gap-4 md:gap-10 mb-6 md:mb-8 z-20 px-4"
                   initial={{ opacity: 0, y: 50 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.8, delay: 1.4 }}
@@ -686,7 +686,7 @@ const LandingPage = () => {
                       transition={{ duration: 0.5, delay: 1.5 + index * 0.1 }}
                     >
                       <MagneticButton
-                        className="group relative font-semibold text-zinc-800 py-3 px-6 md:px-8 rounded-full bg-white/60 backdrop-blur-sm border border-[#e15f41]/30 hover:bg-white  hover:shadow-xl transition-all duration-300 overflow-hidden"
+                        className="group relative font-semibold text-sm md:text-base text-zinc-800 py-2 md:py-3 px-5 md:px-8 rounded-full bg-white/60 backdrop-blur-sm border border-[#e15f41]/30 hover:bg-white hover:shadow-xl transition-all duration-300 overflow-hidden"
                         onClick={() => handleNavClick(item)}
                       >
                         <motion.span 
