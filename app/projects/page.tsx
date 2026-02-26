@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
-import { ChevronLeft, ChevronRight, Github, ExternalLink } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Github } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useRouter } from 'next/navigation';
 
@@ -85,26 +85,26 @@ const AnimationStyles = () => (
 // -----------------------------
 // Floating Orb Component
 // -----------------------------
-const FloatingOrb = ({ 
-  className, 
-  size, 
-  color, 
-  delay = 0 
-}: { 
-  className: string; 
-  size: string; 
-  color: string; 
+const FloatingOrb = ({
+  className,
+  size,
+  color,
+  delay = 0
+}: {
+  className: string;
+  size: string;
+  color: string;
   delay?: number;
 }) => (
   <motion.div
     className={`absolute rounded-full blur-3xl opacity-20 ${className}`}
     style={{ width: size, height: size, background: color }}
     initial={{ opacity: 0, scale: 0.8 }}
-    animate={{ 
+    animate={{
       opacity: [0.2, 0.3, 0.2],
       scale: [1, 1.1, 1],
     }}
-    transition={{ 
+    transition={{
       duration: 8,
       delay,
       repeat: Infinity,
@@ -118,7 +118,7 @@ const FloatingOrb = ({
 // -----------------------------
 const GridBackground = () => (
   <div className="absolute inset-0 overflow-hidden pointer-events-none">
-    <motion.div 
+    <motion.div
       className="absolute inset-0"
       style={{
         backgroundImage: `
@@ -143,14 +143,23 @@ const GridBackground = () => (
 // Particle System
 // -----------------------------
 const ParticleSystem = () => {
-  const particles = Array.from({ length: 25 }, (_, i) => ({
-    id: i,
-    x: Math.random() * 100,
-    y: Math.random() * 100,
-    size: Math.random() * 4 + 2,
-    duration: Math.random() * 20 + 15,
-    delay: Math.random() * 5,
-  }));
+  // Generate stable particle data (same on server and client)
+  const particles = React.useMemo(() => {
+    const seededRandom = (seed: number) => {
+      const x = Math.sin(seed) * 10000;
+      return x - Math.floor(x);
+    };
+
+    return Array.from({ length: 25 }, (_, i) => ({
+      id: i,
+      x: seededRandom(i * 1.1) * 100,
+      y: seededRandom(i * 2.3) * 100,
+      size: seededRandom(i * 3.7) * 4 + 2,
+      duration: seededRandom(i * 5.1) * 20 + 15,
+      delay: seededRandom(i * 7.3) * 5,
+      moveX: seededRandom(i * 9.7) * 50 - 25,
+    }));
+  }, []);
 
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -166,7 +175,7 @@ const ParticleSystem = () => {
           }}
           animate={{
             y: [0, -100, 0],
-            x: [0, Math.random() * 50 - 25, 0],
+            x: [0, particle.moveX, 0],
             opacity: [0, 0.5, 0],
           }}
           transition={{
@@ -185,12 +194,28 @@ const ProjectsPage = () => {
   const router = useRouter();
   const [currentPage, setCurrentPage] = useState(0);
   const [isLoaded, setIsLoaded] = useState(false);
-  
+
   useEffect(() => {
     setIsLoaded(true);
   }, []);
 
   const projects = [
+    {
+      title: "Nexis",
+      subtitle: "Agentic AI intent classification & hybrid RAG",
+      description: "Agentic AI system using intent classification and function calling to perform hybrid RAG and live database operations for e-commerce support.",
+      features: ["MERN", "Llama-3.3", "MongoDB", "Cohere"],
+      github: "https://github.com/harishb2006/Nexis.git",
+      live: ""
+    },
+    {
+      title: "RuleBook AI",
+      subtitle: "Enterprise-grade RAG system for HR policies",
+      description: "RAG system enabling employees to query HR and corporate policy PDFs with 100% source-grounded accuracy, eliminating manual lookups.",
+      features: ["FastAPI", "React.js", "LangChain", "Pinecone"],
+      github: "https://github.com/harishb2006/DocGuard.git",
+      live: ""
+    },
     {
       title: "Collab-O ",
       subtitle: "AI freelance collaboration platform",
@@ -207,12 +232,12 @@ const ProjectsPage = () => {
       github: "https://github.com/kalviumcommunity/s76_Weird_Indian_cultures.git",
       live: "https://deo.co"
     },
-    
+
     {
       title: "DataSpeaks",
       subtitle: "Simple english to queries",
       description: "Convert natural language to SQL queries effortlessly.",
-      features: ["TypeScript", "Next.js",  "rag", "langchain"],
+      features: ["TypeScript", "Next.js", "rag", "langchain"],
       github: "https://github.com/kalviumcommunity/DataSpeaks.git",
       live: "https://demo.com"
     },
@@ -270,10 +295,10 @@ const ProjectsPage = () => {
   return (
     <>
       <AnimationStyles />
-      
+
       <div className="bg-[#121212] flex justify-center items-center min-h-screen w-full p-4 md:p-6 py-8">
         <div className="bg-[#f0ebe5] w-full max-w-7xl min-h-screen md:h-screen rounded-2xl flex flex-col relative shadow-2xl overflow-hidden">
-          
+
           {/* Animated Grid Background */}
           <GridBackground />
 
@@ -281,27 +306,27 @@ const ProjectsPage = () => {
           <ParticleSystem />
 
           {/* Floating Background Orbs */}
-          <FloatingOrb 
-            className="top-10 left-10 animate-float" 
-            size="400px" 
-            color="linear-gradient(135deg, #e15f41 0%, #f5a623 100%)" 
+          <FloatingOrb
+            className="top-10 left-10 animate-float"
+            size="400px"
+            color="linear-gradient(135deg, #e15f41 0%, #f5a623 100%)"
             delay={0.2}
           />
-          <FloatingOrb 
-            className="bottom-20 right-10 animate-float-delayed" 
-            size="350px" 
-            color="linear-gradient(135deg, #667eea 0%, #764ba2 100%)" 
+          <FloatingOrb
+            className="bottom-20 right-10 animate-float-delayed"
+            size="350px"
+            color="linear-gradient(135deg, #667eea 0%, #764ba2 100%)"
             delay={0.4}
           />
-          <FloatingOrb 
-            className="top-1/2 right-1/4 animate-float-slow" 
-            size="300px" 
-            color="linear-gradient(135deg, #f093fb 0%, #f5576c 100%)" 
+          <FloatingOrb
+            className="top-1/2 right-1/4 animate-float-slow"
+            size="300px"
+            color="linear-gradient(135deg, #f093fb 0%, #f5576c 100%)"
             delay={0.6}
           />
 
           {/* Back Button */}
-          <motion.div 
+          <motion.div
             className="absolute top-6 left-6 z-30"
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
@@ -319,13 +344,13 @@ const ProjectsPage = () => {
           </motion.div>
 
           {/* Top Status Bar */}
-          <motion.div 
+          <motion.div
             className="w-full flex justify-end items-center px-6 md:px-12 pt-6 z-20"
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            <motion.div 
+            <motion.div
               className="text-sm text-zinc-500 font-mono"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -342,7 +367,7 @@ const ProjectsPage = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.3 }}
             >
-              <motion.h1 
+              <motion.h1
                 className="text-3xl sm:text-4xl md:text-6xl font-bold text-center text-zinc-900 font-anton mb-3 md:mb-4 px-4"
                 initial={{ scale: 0.9 }}
                 animate={{ scale: 1 }}
@@ -350,7 +375,7 @@ const ProjectsPage = () => {
               >
                 My Projects
               </motion.h1>
-              <motion.p 
+              <motion.p
                 className="text-center text-zinc-700 mb-6 md:mb-12 max-w-2xl mx-auto text-sm sm:text-base md:text-lg px-4"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
@@ -361,7 +386,7 @@ const ProjectsPage = () => {
             </motion.div>
 
             <div className="flex-1 flex items-center justify-center py-4 md:py-0">
-              <motion.div 
+              <motion.div
                 className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 lg:gap-8 justify-items-center w-full max-w-6xl px-2"
                 key={currentPage}
                 initial={{ opacity: 0, x: 50 }}
@@ -370,13 +395,13 @@ const ProjectsPage = () => {
                 transition={{ duration: 0.5 }}
               >
                 {displayedProjects.map((project, index) => (
-                  <motion.div 
-                    key={startIndex + index} 
+                  <motion.div
+                    key={startIndex + index}
                     className="relative w-full max-w-[340px] h-[380px] sm:h-[400px] group perspective-[2000px]"
                     initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ 
-                      duration: 0.5, 
+                    transition={{
+                      duration: 0.5,
                       delay: 0.1 * index,
                       type: "spring",
                       stiffness: 100
@@ -390,7 +415,7 @@ const ProjectsPage = () => {
                           <div className="absolute inset-0 bg-linear-to-br from-[#e15f41]/20 via-[#f5a623]/20 to-purple-500/20">
                             <div className="absolute inset-0 flex items-center justify-center">
                               <svg className="w-24 h-24 text-white/20" fill="currentColor" viewBox="0 0 20 20">
-                                <path d="M2 6a2 2 0 012-2h12a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2V6zm2 0v8h12V6H4zm2 2h8v4H6V8z"/>
+                                <path d="M2 6a2 2 0 012-2h12a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2V6zm2 0v8h12V6H4zm2 2h8v4H6V8z" />
                               </svg>
                             </div>
                           </div>
@@ -434,15 +459,6 @@ const ProjectsPage = () => {
                             <span className="hidden sm:inline">GitHub</span>
                             <span className="sm:hidden">Code</span>
                           </a>
-                          <a
-                            href={project.live}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="flex-1 flex items-center justify-center gap-1 sm:gap-2 p-2 sm:p-3 rounded-lg bg-[#e15f41] hover:bg-[#d14e32] transition-all duration-300 text-white text-xs sm:text-sm font-medium"
-                          >
-                            <ExternalLink className="w-3 h-3 sm:w-4 sm:h-4" />
-                            Live
-                          </a>
                         </div>
                       </div>
                     </div>
@@ -452,7 +468,7 @@ const ProjectsPage = () => {
             </div>
 
             {/* Pagination Controls */}
-            <motion.div 
+            <motion.div
               className="flex items-center justify-center gap-4 sm:gap-6 mt-6 md:mt-8 mb-4"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -467,17 +483,16 @@ const ProjectsPage = () => {
               >
                 <ChevronLeft className="w-6 h-6 text-white" />
               </motion.button>
-              
+
               <div className="flex gap-2">
                 {Array.from({ length: totalPages }).map((_, index) => (
                   <motion.button
                     key={index}
                     onClick={() => setCurrentPage(index)}
-                    className={`h-2 rounded-full transition-all duration-300 ${
-                      currentPage === index 
-                        ? 'bg-[#e15f41] w-8' 
-                        : 'bg-zinc-400 hover:bg-zinc-500 w-2'
-                    }`}
+                    className={`h-2 rounded-full transition-all duration-300 ${currentPage === index
+                      ? 'bg-[#e15f41] w-8'
+                      : 'bg-zinc-400 hover:bg-zinc-500 w-2'
+                      }`}
                     whileHover={{ scale: 1.2 }}
                     whileTap={{ scale: 0.9 }}
                   />
@@ -497,13 +512,13 @@ const ProjectsPage = () => {
           </div>
 
           {/* Corner Decorations with Animation */}
-          <motion.div 
+          <motion.div
             className="absolute top-6 right-6 w-16 h-16 border-t-2 border-r-2 border-zinc-300/50 rounded-tr-3xl"
             initial={{ opacity: 0, scale: 0 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.6, delay: 0.8 }}
           />
-          <motion.div 
+          <motion.div
             className="absolute bottom-6 left-6 w-16 h-16 border-b-2 border-l-2 border-zinc-300/50 rounded-bl-3xl"
             initial={{ opacity: 0, scale: 0 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -513,24 +528,24 @@ const ProjectsPage = () => {
           {/* Additional corner accents */}
           <motion.div
             className="absolute top-8 left-8 w-2 h-2 rounded-full bg-[#e15f41]/40 z-20"
-            animate={{ 
+            animate={{
               scale: [1, 1.5, 1],
-              opacity: [0.4, 0.8, 0.4] 
+              opacity: [0.4, 0.8, 0.4]
             }}
-            transition={{ 
-              duration: 3, 
+            transition={{
+              duration: 3,
               repeat: Infinity,
-              ease: "easeInOut" 
+              ease: "easeInOut"
             }}
           />
           <motion.div
             className="absolute bottom-8 right-8 w-2 h-2 rounded-full bg-[#e15f41]/40 z-20"
-            animate={{ 
+            animate={{
               scale: [1, 1.5, 1],
-              opacity: [0.4, 0.8, 0.4] 
+              opacity: [0.4, 0.8, 0.4]
             }}
-            transition={{ 
-              duration: 3, 
+            transition={{
+              duration: 3,
               repeat: Infinity,
               ease: "easeInOut",
               delay: 1.5
