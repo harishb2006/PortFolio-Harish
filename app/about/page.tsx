@@ -1,9 +1,10 @@
 "use client";
 
 import React from 'react';
-import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import { useRouter } from 'next/navigation';
 import SocialButton from '@/components/kokonutui/social-button';
+import { GraduationCap, Terminal, Briefcase, Award } from 'lucide-react';
 
 // -----------------------------
 // Animation styles
@@ -26,13 +27,6 @@ const AnimationStyles = () => (
       100% { background-position: 1000px 0; }
     }
 
-    @keyframes morph {
-      0%, 100% { border-radius: 150px 150px 150px 150px; }
-      25% { border-radius: 180px 120px 180px 120px; }
-      50% { border-radius: 120px 180px 120px 180px; }
-      75% { border-radius: 150px 160px 140px 170px; }
-    }
-
     .animate-float {
       animation: float 6s ease-in-out infinite;
     }
@@ -47,11 +41,6 @@ const AnimationStyles = () => (
       animation-delay: -4s;
     }
 
-    .gradient-animate {
-      background-size: 200% 200%;
-      animation: gradient-shift 8s ease infinite;
-    }
-
     .shimmer {
       background: linear-gradient(
         90deg,
@@ -62,41 +51,29 @@ const AnimationStyles = () => (
       background-size: 1000px 100%;
       animation: shimmer 3s infinite;
     }
-
-    .morph-shape {
-      animation: morph 8s ease-in-out infinite;
-    }
   `}</style>
 );
 
 // -----------------------------
 // Floating Orb Component
 // -----------------------------
-const FloatingOrb = ({ 
-  className, 
-  size, 
-  color, 
-  delay = 0 
-}: { 
-  className: string; 
-  size: string; 
-  color: string; 
+const FloatingOrb = ({
+  className,
+  size,
+  color,
+  delay = 0
+}: {
+  className: string;
+  size: string;
+  color: string;
   delay?: number;
 }) => (
   <motion.div
     className={`absolute rounded-full blur-3xl opacity-20 ${className}`}
     style={{ width: size, height: size, background: color }}
     initial={{ opacity: 0, scale: 0.8 }}
-    animate={{ 
-      opacity: [0.2, 0.3, 0.2],
-      scale: [1, 1.1, 1],
-    }}
-    transition={{ 
-      duration: 8,
-      delay,
-      repeat: Infinity,
-      ease: "easeInOut"
-    }}
+    animate={{ opacity: [0.2, 0.3, 0.2], scale: [1, 1.1, 1] }}
+    transition={{ duration: 8, delay, repeat: Infinity, ease: "easeInOut" }}
   />
 );
 
@@ -105,7 +82,7 @@ const FloatingOrb = ({
 // -----------------------------
 const GridBackground = () => (
   <div className="absolute inset-0 overflow-hidden pointer-events-none">
-    <motion.div 
+    <motion.div
       className="absolute inset-0"
       style={{
         backgroundImage: `
@@ -114,68 +91,11 @@ const GridBackground = () => (
         `,
         backgroundSize: '50px 50px',
       }}
-      animate={{
-        backgroundPosition: ['0px 0px', '50px 50px'],
-      }}
-      transition={{
-        duration: 20,
-        repeat: Infinity,
-        ease: "linear"
-      }}
+      animate={{ backgroundPosition: ['0px 0px', '50px 50px'] }}
+      transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
     />
   </div>
 );
-
-// -----------------------------
-// Particle System
-// -----------------------------
-const ParticleSystem = () => {
-  // Generate stable particle data (same on server and client)
-  const particles = React.useMemo(() => {
-    const seededRandom = (seed: number) => {
-      const x = Math.sin(seed) * 10000;
-      return x - Math.floor(x);
-    };
-
-    return Array.from({ length: 20 }, (_, i) => ({
-      id: i,
-      x: seededRandom(i * 1.1) * 100,
-      y: seededRandom(i * 2.3) * 100,
-      size: seededRandom(i * 3.7) * 4 + 2,
-      duration: seededRandom(i * 5.1) * 20 + 15,
-      delay: seededRandom(i * 7.3) * 5,
-      moveX: seededRandom(i * 9.7) * 50 - 25,
-    }));
-  }, []);
-
-  return (
-    <div className="absolute inset-0 overflow-hidden pointer-events-none">
-      {particles.map((particle) => (
-        <motion.div
-          key={particle.id}
-          className="absolute rounded-full bg-zinc-400/20"
-          style={{
-            width: particle.size,
-            height: particle.size,
-            left: `${particle.x}%`,
-            top: `${particle.y}%`,
-          }}
-          animate={{
-            y: [0, -100, 0],
-            x: [0, particle.moveX, 0],
-            opacity: [0, 0.5, 0],
-          }}
-          transition={{
-            duration: particle.duration,
-            delay: particle.delay,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-        />
-      ))}
-    </div>
-  );
-};
 
 // -----------------------------
 // About Page Component
@@ -183,319 +103,162 @@ const ParticleSystem = () => {
 const AboutPage = () => {
   const router = useRouter();
   const { scrollYProgress } = useScroll();
-  
+
   const headerY = useTransform(scrollYProgress, [0, 0.3], [0, -50]);
   const headerOpacity = useTransform(scrollYProgress, [0, 0.3], [1, 0]);
 
-  const technologies = [
-    { name: 'HTML5', icon: '◉', color: 'from-orange-500 to-red-500' },
-    { name: 'CSS3', icon: '◉', color: 'from-blue-500 to-blue-600' },
-    { name: 'Tailwind CSS', icon: '~', color: 'from-cyan-400 to-blue-500' },
-    { name: 'JavaScript', icon: 'JS', color: 'from-yellow-400 to-yellow-600' },
+  const allSkills = [
+    { name: 'Python (Adv)', icon: '●', color: 'from-blue-400 to-yellow-500' },
+    { name: 'Java', icon: '◈', color: 'from-red-500 to-orange-600' },
     { name: 'TypeScript', icon: 'TS', color: 'from-blue-500 to-blue-700' },
-    { name: 'ReactJs', icon: '⚛', color: 'from-cyan-400 to-blue-500' },
+    { name: 'React.js', icon: '⚛', color: 'from-cyan-400 to-blue-500' },
     { name: 'Next.js', icon: '▲', color: 'from-gray-800 to-black' },
     { name: 'Node.js', icon: '◉', color: 'from-green-500 to-green-700' },
-    { name: 'Java', icon: '◈', color: 'from-red-500 to-orange-600' },
-    { name: 'Python', icon: '●', color: 'from-blue-400 to-yellow-500' },
-    { name: 'MySQL', icon: '◈', color: 'from-blue-500 to-blue-700' },
-    { name: 'Git', icon: '◈', color: 'from-orange-600 to-red-600' },
-    { name: 'Supabase', icon: '⚡', color: 'from-green-400 to-emerald-600' },
-    { name: 'Express.js', icon: '×', color: 'from-gray-600 to-gray-800' },
+    { name: 'FastAPI', icon: '⚡', color: 'from-teal-400 to-teal-600' },
     { name: 'MongoDB', icon: '◉', color: 'from-green-500 to-green-700' },
     { name: 'PostgreSQL', icon: '◉', color: 'from-blue-600 to-indigo-700' },
-    { name: 'AWS', icon: '≡', color: 'from-orange-400 to-yellow-600' },
+    { name: 'RAG Systems', icon: '🧠', color: 'from-purple-500 to-indigo-500' },
+    { name: 'Langchain', icon: '🔗', color: 'from-gray-600 to-gray-800' },
     { name: 'Docker', icon: '●', color: 'from-blue-500 to-cyan-600' },
-    { name: 'CI/CD', icon: '◉', color: 'from-purple-500 to-pink-600' },
+    { name: 'AWS Basics', icon: '☁', color: 'from-orange-400 to-yellow-600' }
   ];
-
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-        delayChildren: 0.3,
-      }
-    }
-  };
-
-  const itemVariants = {
-    hidden: { y: 20, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: {
-        type: "spring" as const,
-        stiffness: 100,
-        damping: 12
-      }
-    }
-  };
 
   return (
     <>
       <AnimationStyles />
-      
+
       <div className="min-h-screen w-full flex flex-col bg-[#121212] text-white antialiased py-4 md:py-0">
         <div className="bg-[#f0ebe5] w-full max-w-7xl mx-auto rounded-2xl my-4 md:my-6 relative overflow-hidden">
-          
-          {/* Animated Grid Background */}
+
           <GridBackground />
 
-          {/* Particle System */}
-          <ParticleSystem />
-
-          {/* Floating Background Orbs */}
-          <FloatingOrb 
-            className="top-20 left-10 animate-float" 
-            size="400px" 
-            color="linear-gradient(135deg, #e15f41 0%, #f5a623 100%)" 
-            delay={0.2}
-          />
-          <FloatingOrb 
-            className="bottom-40 right-10 animate-float-delayed" 
-            size="350px" 
-            color="linear-gradient(135deg, #667eea 0%, #764ba2 100%)" 
-            delay={0.4}
-          />
-          <FloatingOrb 
-            className="top-1/2 right-1/4 animate-float-slow" 
-            size="300px" 
-            color="linear-gradient(135deg, #f093fb 0%, #f5576c 100%)" 
-            delay={0.6}
-          />
+          <FloatingOrb className="top-20 left-10 animate-float" size="400px" color="linear-gradient(135deg, #e15f41 0%, #f5a623 100%)" delay={0.2} />
+          <FloatingOrb className="bottom-40 right-10 animate-float-delayed" size="350px" color="linear-gradient(135deg, #667eea 0%, #764ba2 100%)" delay={0.4} />
 
           {/* Back Button */}
-          <motion.div 
+          <motion.div
             className="absolute top-6 left-6 z-30"
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
+            initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.6, delay: 0.2 }}
           >
             <motion.button
               onClick={() => router.push('/')}
               className="group flex items-center gap-2 px-4 py-2 rounded-full bg-white/60 backdrop-blur-sm border border-white/40 hover:bg-white hover:shadow-lg transition-all duration-300 text-zinc-800 font-semibold"
-              whileHover={{ scale: 1.05, x: -5 }}
-              whileTap={{ scale: 0.95 }}
+              whileHover={{ scale: 1.05, x: -5 }} whileTap={{ scale: 0.95 }}
             >
               <span className="text-lg">←</span>
               <span>Back</span>
             </motion.button>
           </motion.div>
 
-          {/* Top Status Bar */}
-          <motion.div 
-            className="w-full flex justify-end items-center px-6 md:px-12 pt-6 z-20"
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-          >
-            <motion.div 
-              className="text-sm text-zinc-500 font-mono"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.5 }}
-            >
-              About / Profile
-            </motion.div>
-          </motion.div>
+          <div className="relative p-6 md:p-12 pt-20 md:pt-24 z-10 text-zinc-900">
 
-          {/* Main Content */}
-          <div className="relative p-6 md:p-12 pt-20 md:pt-24">
-            
-            {/* Hero Header with Parallax */}
-            <motion.div
-              style={{ y: headerY, opacity: headerOpacity }}
-              className="relative z-10"
-            >
-              <motion.div
-                initial={{ scale: 0.9, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                transition={{ duration: 0.8, delay: 0.3 }}
-                className="relative mx-auto max-w-4xl"
-              >
-                <div className="relative border-2 bg- border-orange-400 p-6 sm:p-8 md:p-12 overflow-hidden group">
-                  {/* Shimmer effect */}
+            {/* Header */}
+            <motion.div style={{ y: headerY, opacity: headerOpacity }} className="relative z-10 mb-12">
+              <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ duration: 0.8 }} className="mx-auto max-w-4xl">
+                <div className="relative border-4 border-[#e15f41] rounded-2xl p-6 sm:p-8 md:p-10 overflow-hidden group bg-white/30 backdrop-blur-sm shadow-xl">
                   <div className="absolute inset-0 shimmer opacity-0 group-hover:opacity-100" />
-                  
-                  {/* Decorative corner elements */}
-                  <motion.div
-                    className="absolute top-4 right-4 w-3 h-3 rounded-full bg-white/30"
-                    animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.6, 0.3] }}
-                    transition={{ duration: 3, repeat: Infinity }}
-                  />
-                  <motion.div
-                    className="absolute bottom-4 left-4 w-3 h-3 rounded-full bg-white/30"
-                    animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.6, 0.3] }}
-                    transition={{ duration: 3, repeat: Infinity, delay: 1.5 }}
-                  />
-
-                  <motion.h1 
-                    className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-bold text-center text-black font-anton leading-tight relative z-10"
-                    initial={{ y: 20, opacity: 0 }}
-                    animate={{ y: 0, opacity: 1 }}
-                    transition={{ duration: 0.6, delay: 0.5 }}
-                  >
-                    I develop Web and AI
-                    <br />
-                    <span className="inline-block mt-2">integrated Applications</span>
-                  </motion.h1>
+                  <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-center font-anton relative z-10">
+                    Full-Stack Developer
+                    <span className="block text-xl sm:text-2xl mt-4 font-medium font-sans text-zinc-700">Engineering Scalable Web Architectures & AI Systems</span>
+                  </h1>
                 </div>
               </motion.div>
             </motion.div>
 
-            {/* About Text Section */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.6 }}
-              className="my-12 md:my-16 lg:my-24 max-w-3xl mx-auto relative z-10"
-            >
-              <div className="bg-white/40 backdrop-blur-sm rounded-3xl p-6 sm:p-8 md:p-12 border border-white/60 shadow-xl">
-                {/* Profile Image Placeholder */}
-                <motion.div
-                  className="w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 mx-auto mb-6 md:mb-8 rounded-full bg-linear-to-br from-[#e15f41] to-[#f5a623] flex items-center justify-center text-4xl sm:text-5xl md:text-6xl font-bold text-white shadow-2xl"
-                  initial={{ scale: 0, rotate: -180 }}
-                  animate={{ scale: 1, rotate: 0 }}
-                  transition={{ 
-                    type: "spring", 
-                    stiffness: 200, 
-                    damping: 15,
-                    delay: 0.8 
-                  }}
-                  whileHover={{ scale: 1.1, rotate: 5 }}
-                >
-                  H
+            {/* Main Content Grid */}
+            <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8">
+
+              {/* Left Column (Statement & Education) */}
+              <div className="lg:col-span-2 space-y-8">
+
+                {/* Personal Statement */}
+                <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.2 }} className="bg-white/60 backdrop-blur-md rounded-3xl p-8 border border-white shadow-xl">
+                  <div className="flex items-center gap-4 mb-4">
+                    <div className="w-16 h-16 rounded-full bg-linear-to-br from-[#e15f41] to-[#f5a623] flex items-center justify-center text-2xl font-bold text-white shadow-lg">H</div>
+                    <h2 className="text-3xl font-bold font-anton text-[#e15f41]">Hello, I&apos;m Harish</h2>
+                  </div>
+                  <p className="text-lg text-zinc-800 leading-relaxed font-medium">
+                    I specialize in designing production-ready features that reduce manual effort and improve data accuracy. My passion lies in engineering high-impact software solutions that combine clean code with intelligent automation. At present, I am honing my skills in Software Product Engineering.
+                  </p>
                 </motion.div>
 
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ duration: 0.8, delay: 1 }}
-                >
-                  <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-center text-zinc-900 mb-3 md:mb-4 font-anton">
-                    Hello, I&apos;m Harish
-                  </h2>
-                  
-                  <div className="space-y-3 sm:space-y-4 text-sm sm:text-base md:text-lg text-zinc-700 leading-relaxed">
-                    <motion.p
-                      initial={{ opacity: 0, x: -20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ duration: 0.6, delay: 1.2 }}
-                    >
-                      I am a passionate <span className="font-bold text-[#e15f41]">Web Developer</span> with over <span className="font-bold">3+ years</span> of experience in web design and development.
-                    </motion.p>
-
-                    <motion.p
-                      initial={{ opacity: 0, x: -20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ duration: 0.6, delay: 1.4 }}
-                    >
-                      I am a passionate and ebullient person who enjoys developing fresh concepts and projects while exploring uncharted territory. I aspire to be an <span className="font-bold text-[#e15f41]">entrepreneur</span> and want to give back to society by enhancing its resources.
-                    </motion.p>
-
-                    <motion.p
-                      initial={{ opacity: 0, x: -20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ duration: 0.6, delay: 1.6 }}
-                    >
-                      I create and perform <span className="font-bold text-[#e15f41]">poetry</span> with fervour. My commitment to my work and never-ending desire to improve makes me stand out. I&apos;m an outgoing, amiable person who enjoys meeting new people and developing positive relationships.
-                    </motion.p>
+                {/* Experience Highlights */}
+                <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.4 }} className="bg-white/50 backdrop-blur-sm rounded-3xl p-8 border border-white shadow-lg">
+                  <h3 className="text-2xl font-bold font-anton mb-6 flex items-center gap-3">
+                    <Briefcase className="text-[#667eea]" /> Key Engineering Highlights
+                  </h3>
+                  <div className="space-y-6">
+                    <div className="border-l-4 border-[#e15f41] pl-5">
+                      <h4 className="font-bold text-xl text-zinc-900">Nexis AI E-commerce Support</h4>
+                      <p className="text-zinc-700 mt-2">Developed an agentic AI system for hybrid RAG and live MERN database operations. Automated 75% of routine customer inquiries using Llama-3.3-70b and optimized tool selection for sub-2-second response times.</p>
+                    </div>
+                    <div className="border-l-4 border-[#f5a623] pl-5">
+                      <h4 className="font-bold text-xl text-zinc-900">RuleBook AI RAG System</h4>
+                      <p className="text-zinc-700 mt-2">Built an enterprise-grade NLP pipeline using FastAPI and LangChain to query HR PDFs. Solved hallucinations through strict context prompting, eliminating manual lookups for 100+ page documents.</p>
+                    </div>
+                    <div className="border-l-4 border-[#667eea] pl-5">
+                      <h4 className="font-bold text-xl text-zinc-900">Collab-O Platform</h4>
+                      <p className="text-zinc-700 mt-2">Engineered a full-stack freelance platform with AI-assisted contract generation, real-time Socket.IO collaboration, and automated skill assessments cutting manual evaluation by 60%.</p>
+                    </div>
+                  </div>
+                  <div className="mt-6 pt-4 text-center">
+                    <motion.button onClick={() => router.push('/projects')} className="text-sm font-bold bg-zinc-900 text-white px-6 py-2 rounded-full hover:bg-[#e15f41] transition-colors">
+                      Explore Full Projects Portfolio
+                    </motion.button>
                   </div>
                 </motion.div>
               </div>
+
+              {/* Right Column (Skills & Ed) */}
+              <div className="space-y-8">
+
+                {/* Education */}
+                <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.6, delay: 0.3 }} className="bg-white/60 backdrop-blur-md rounded-3xl p-6 border border-white shadow-xl">
+                  <h3 className="text-xl font-bold font-anton mb-4 flex items-center gap-2">
+                    <GraduationCap className="text-[#667eea]" /> Education
+                  </h3>
+                  <div className="mb-4">
+                    <h4 className="font-bold text-zinc-900">BCA (Software Product Engineering)</h4>
+                    <p className="text-sm text-[#e15f41] font-bold">2024 - 2028</p>
+                    <p className="text-sm text-zinc-700 mt-1">Kalvium / University of Mysore</p>
+                    <p className="text-xs text-zinc-500 mt-1">Campus: Coimbatore (Direct)</p>
+                  </div>
+                </motion.div>
+
+                {/* Achievements */}
+                <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.6, delay: 0.5 }} className="bg-white/60 backdrop-blur-md rounded-3xl p-6 border border-white shadow-xl">
+                  <h3 className="text-xl font-bold font-anton mb-4 flex items-center gap-2">
+                    <Award className="text-[#f5a623]" /> Achievements
+                  </h3>
+                  <ul className="text-sm text-zinc-700 space-y-3 font-medium">
+                    <li className="flex gap-2"><span className="text-[#f5a623]">▹</span> Kalvium Labs Hackathon live demo (&lt;24h)</li>
+                    <li className="flex gap-2"><span className="text-[#f5a623]">▹</span> Tech Job Simulation with Deloitte</li>
+                    <li className="flex gap-2"><span className="text-[#f5a623]">▹</span> 125+ LeetCode problems solved</li>
+                    <li className="flex gap-2"><span className="text-[#f5a623]">▹</span> KLAPS Club Public Speaking</li>
+                  </ul>
+                </motion.div>
+
+                {/* Condensed Skills */}
+                <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.6, delay: 0.7 }} className="bg-white/60 backdrop-blur-md rounded-3xl p-6 border border-white shadow-xl">
+                  <h3 className="text-xl font-bold font-anton mb-4 flex items-center gap-2">
+                    <Terminal className="text-zinc-800" /> Core Tech Stack
+                  </h3>
+                  <div className="flex flex-wrap gap-2">
+                    {allSkills.map((tech, idx) => (
+                      <span key={idx} className="bg-zinc-100/80 border border-zinc-200 text-zinc-800 text-xs px-3 py-1.5 rounded-md font-bold flex items-center gap-1.5 shadow-sm">
+                        <span>{tech.name}</span>
+                      </span>
+                    ))}
+                  </div>
+                </motion.div>
+
+              </div>
+            </div>
+
+            {/* Social Share Button */}
+            <motion.div className="mt-8 md:mt-12 flex justify-center z-10" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 1.2 }}>
+              <SocialButton />
             </motion.div>
-
-            {/* Technologies Section */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.8 }}
-              className="relative z-10 pb-12"
-            >
-              <motion.h2 
-                className="text-2xl sm:text-3xl md:text-4xl font-bold text-center text-zinc-900 font-anton mb-8 md:mb-12 px-4"
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.6, delay: 1 }}
-              >
-                Technologies I&apos;ve worked with
-              </motion.h2>
-
-              <motion.div 
-                className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 md:gap-4 max-w-5xl mx-auto px-4"
-                variants={containerVariants}
-                initial="hidden"
-                animate="visible"
-              >
-                {technologies.map((tech, index) => (
-                  <motion.div
-                    key={index}
-                    variants={itemVariants}
-                    whileHover={{ 
-                      scale: 1.1, 
-                      rotate: [0, -5, 5, 0],
-                      transition: { duration: 0.3 }
-                    }}
-                    whileTap={{ scale: 0.95 }}
-                    className="group relative"
-                  >
-                    <div className="px-3 py-2 sm:px-4 sm:py-2.5 md:px-5 md:py-3 flex items-center gap-1.5 sm:gap-2 bg-white/70 backdrop-blur-sm border border-zinc-800/20 rounded-full text-xs sm:text-sm md:text-base font-bold text-zinc-800 shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden">
-                      {/* Gradient background on hover */}
-                      <motion.div
-                        className={`absolute inset-0 bg-linear-to-r ${tech.color} opacity-0 group-hover:opacity-10 rounded-full`}
-                        initial={{ scale: 0 }}
-                        whileHover={{ scale: 1 }}
-                        transition={{ duration: 0.3 }}
-                      />
-                      
-                      {/* Icon with animation */}
-                      <motion.span 
-                        className="text-base sm:text-lg relative z-10"
-                        animate={{ 
-                          rotate: [0, 10, -10, 0],
-                        }}
-                        transition={{
-                          duration: 2,
-                          repeat: Infinity,
-                          delay: index * 0.1,
-                          ease: "easeInOut"
-                        }}
-                      >
-                        {tech.icon}
-                      </motion.span>
-                      
-                      <span className="relative z-10">{tech.name}</span>
-                    </div>
-                  </motion.div>
-                ))}
-              </motion.div>
-
-              {/* Social Share Button */}
-              <motion.div
-                className="mt-8 md:mt-12 flex justify-center z-10"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 1.8 }}
-              >
-                <SocialButton />
-              </motion.div>
-            </motion.div>
-
-            {/* Bottom decorative elements */}
-            <motion.div 
-              className="absolute bottom-6 right-6 w-16 h-16 border-t-2 border-r-2 border-zinc-300/50 rounded-tr-3xl"
-              initial={{ opacity: 0, scale: 0 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.6, delay: 1.8 }}
-            />
-            <motion.div 
-              className="absolute bottom-6 left-6 w-16 h-16 border-b-2 border-l-2 border-zinc-300/50 rounded-bl-3xl"
-              initial={{ opacity: 0, scale: 0 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.6, delay: 1.8 }}
-            />
 
           </div>
         </div>
