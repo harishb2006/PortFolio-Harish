@@ -1,37 +1,67 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Harish B — Portfolio
 
-## Getting Started
+Personal portfolio built with Next.js 16 (App Router), Tailwind CSS v4 and
+Framer Motion. White-first soft-morphism UI: raised white surfaces on a warm
+grey canvas, inset wells, hairline bevels and restrained hover.
 
-First, run the development server:
+## Run
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+npm run dev      # http://localhost:3000
+npm run build    # production build
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Editing content
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Everything the site renders comes from [`lib/data.ts`](lib/data.ts) — profile,
+what you're building now, experience, education, projects, toolkit. Change it
+there and every page updates.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Images to add
 
-## Learn More
+| File | Used for |
+| --- | --- |
+| `public/my_photo.jpg` | Your photo in the hero (falls back to an `H` monogram) |
+| `public/logos/aarogya.png` | Aarogya ID logo on the experience card |
+| `public/logos/kalvium.png` | Kalvium logo on the education card |
 
-To learn more about Next.js, take a look at the following resources:
+Each one shows a lettered placeholder until the file exists, so nothing breaks
+in the meantime. Different extension? Update the path in `lib/data.ts`.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Structure
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```
+app/
+  page.tsx           Home — hero, building now, experience, education, toolkit
+  projects/page.tsx  Filterable project grid
+  connect/page.tsx   Contact form + direct channels
+  api/contact/       Resend handler for the contact form
+  globals.css        Design tokens + .soft / .soft-sm / .soft-inset utilities
+components/site/     Nav, footer, cards, marquee, avatar, logos, form
+lib/data.ts          All site content
+```
 
-## Deploy on Vercel
+## Design system
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Three surface utilities carry the whole look:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
-# PortFolio-Harish
+- `.soft` — raised card (inner highlight + wide ambient shadow)
+- `.soft-sm` — same treatment for pills, chips and small controls
+- `.soft-inset` — pressed well, used for tracks, tags and form fields
+
+Plus `.lift` (3px hover rise), `.press` (active scale), `.hairline` (bevel
+border) and `.reveal` (CSS-only entrance — no JS dependency, so content is
+never stuck invisible).
+
+## Environment
+
+The contact form needs a [Resend](https://resend.com) key. Copy
+`.env.example` to `.env.local`:
+
+```
+RESEND_API_KEY=re_xxx
+CONTACT_FROM_EMAIL=you@yourdomain.com   # optional, defaults to onboarding@resend.dev
+```
+
+Without `RESEND_API_KEY` the form returns a clear error instead of crashing.
