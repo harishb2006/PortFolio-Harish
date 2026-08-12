@@ -1,44 +1,64 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { Resend } from 'resend';
+import { NextRequest, NextResponse } from "next/server";
+import { Resend } from "resend";
+import { profile } from "@/lib/data";
 
-const resend = new Resend('re_bdLWw3i7_NSHsYCQsp4QH6AEQJxrNGSSu');
+const escapeHtml = (value: string) =>
+  value
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
 
 export async function POST(request: NextRequest) {
-  try {
-    const body = await request.json();
-    const { name, email, message } = body;
+  const apiKey = process.env.RESEND_API_KEY;
 
-    // Validate the data
-    if (!name || !email || !message) {
+  if (!apiKey) {
+    console.error("RESEND_API_KEY is not set");
+    return NextResponse.json(
+      { error: "Mail is not configured right now — please email me directly." },
+      { status: 500 },
+    );
+  }
+
+  try {
+    const { name, email, message } = await request.json();
+
+    if (!name?.trim() || !email?.trim() || !message?.trim()) {
       return NextResponse.json(
-        { error: 'All fields are required' },
-        { status: 400 }
+        { error: "All fields are required." },
+        { status: 400 },
       );
     }
 
-    // Send email using Resend
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      return NextResponse.json(
+        { error: "That email address doesn't look right." },
+        { status: 400 },
+      );
+    }
+
+    const resend = new Resend(apiKey);
+
     await resend.emails.send({
-      from: 'onboarding@resend.dev',
-      to: 'imharishba@gmail.com',
-      subject: `New message from ${name}`,
+      from: process.env.CONTACT_FROM_EMAIL || "onboarding@resend.dev",
+      to: profile.email,
+      replyTo: email,
+      subject: `Portfolio message from ${name}`,
       html: `
-        <h2>New Contact Form Submission</h2>
-        <p><strong>Name:</strong> ${name}</p>
-        <p><strong>Email:</strong> ${email}</p>
+        <h2>New contact form submission</h2>
+        <p><strong>Name:</strong> ${escapeHtml(name)}</p>
+        <p><strong>Email:</strong> ${escapeHtml(email)}</p>
         <p><strong>Message:</strong></p>
-        <p>${message}</p>
+        <p>${escapeHtml(message).replace(/\n/g, "<br />")}</p>
       `,
     });
 
-    return NextResponse.json(
-      { message: 'Email sent successfully' },
-      { status: 200 }
-    );
+    return NextResponse.json({ message: "Sent" }, { status: 200 });
   } catch (error) {
-    console.error('Error processing contact form:', error);
+    console.error("Contact form error:", error);
     return NextResponse.json(
-      { error: 'Failed to send message' },
-      { status: 500 }
+      { error: "Failed to send. Try emailing me directly." },
+      { status: 500 },
     );
   }
 }
